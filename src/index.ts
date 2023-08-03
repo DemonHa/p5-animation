@@ -1,4 +1,14 @@
-import { animate, ease } from "./animation-functions";
+import {
+  animate,
+  ease,
+  easeInSine,
+  easeOutSine,
+  easeInOutSine,
+  easeInQuad,
+  easeOutQuad,
+  easeInOutQuad,
+  easeInOutQuint,
+} from "./animation-functions";
 import { getTime } from "./utils";
 
 type AnimationProps = {
@@ -57,4 +67,13 @@ const animation = ({ animation, duration }: AnimationProps) => {
 };
 
 export default animation;
-export { ease };
+export {
+  ease,
+  easeInSine,
+  easeOutSine,
+  easeInOutSine,
+  easeInQuad,
+  easeOutQuad,
+  easeInOutQuad,
+  easeInOutQuint,
+};
