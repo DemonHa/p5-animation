@@ -33,9 +33,9 @@ const animation = ({ animation, duration }: AnimationProps) => {
         setTimeout(() => resolve(null), duration);
       });
     },
-    progress: () => {
+    progress: (defaultValue: number) => {
       if (!inProgress) {
-        throw "Animation is not in progress";
+        return defaultValue;
       }
       const timestamp = getTime();
       timePassed += timestamp - lastFrameTimestamp;
