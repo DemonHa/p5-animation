@@ -39,8 +39,12 @@ const animation = ({ animation, duration }: AnimationProps) => {
       startingPoint = from;
       endingPoint = to;
 
+      // Don't set the animation as completed here, since we don't want the
+      // user to have inconsistent result because of the frame rate
       return new Promise((resolve) => {
-        setTimeout(() => resolve(null), duration);
+        setTimeout(() => {
+          resolve(null);
+        }, duration);
       });
     },
     progress: (defaultValue: number) => {
@@ -51,7 +55,7 @@ const animation = ({ animation, duration }: AnimationProps) => {
       timePassed += timestamp - lastFrameTimestamp;
       lastFrameTimestamp = timestamp;
 
-      if (timePassed > duration) {
+      if (timePassed >= duration) {
         inProgress = false;
       }
 
