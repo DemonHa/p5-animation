@@ -1,0 +1,17 @@
+{
+  "name": "p5-animation",
+  "version": "1.0.0",
+  "description": "A lightweight library which offers prebuild anaimation functions for your P5 sketches",
+  "main": "./build/index.js",
+  "license": "MIT",
+  "scripts": {
+    "build": "rm -rf ./build && tsc",
+    "testc": "jest"
+  },
+  "devDependencies": {
+    "@types/jest": "^29.5.3",
+    "jest": "^29.6.2",
+    "ts-jest": "^29.1.1",
+    "typescript": "^5.1.6"
+  }
+}
