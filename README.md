@@ -2,7 +2,7 @@
 
 [![NPM Version](https://img.shields.io/npm/v/p5-animation.svg?style=flat)]()
 [![NPM License](https://img.shields.io/npm/l/all-contributors.svg?style=flat)](https://github.com/DemonHa/p5-animation/blob/main/LICENSE)
-[![npm downloads](https://img.shields.io/npm/dt/p5-react.svg)](https://www.npmjs.com/package/p5-animation)
+[![npm downloads](https://img.shields.io/npm/dt/p5-animation.svg)](https://www.npmjs.com/package/p5-animation)
 ![test workflow](https://github.com/DemonHa/p5-animation/actions/workflows/test.yml/badge.svg)
 
 A lightweight library which offers prebuild anaimation functions for your P5 sketches
