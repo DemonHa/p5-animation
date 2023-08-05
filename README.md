@@ -1,7 +1,9 @@
 # p5-animation
 
-[![NPM License](https://img.shields.io/npm/l/all-contributors.svg?style=flat)](https://github.com/DemonHa/p5-react/blob/main/LICENSE)
-![example workflow](https://github.com/DemonHa/p5-animation/actions/workflows/test.yml/badge.svg)
+[![NPM Version](https://img.shields.io/npm/v/p5-animation.svg?style=flat)]()
+[![NPM License](https://img.shields.io/npm/l/all-contributors.svg?style=flat)](https://github.com/DemonHa/p5-animation/blob/main/LICENSE)
+[![npm downloads](https://img.shields.io/npm/dt/p5-react.svg)](https://www.npmjs.com/package/p5-animation)
+![test workflow](https://github.com/DemonHa/p5-animation/actions/workflows/test.yml/badge.svg)
 
 A lightweight library which offers prebuild anaimation functions for your P5 sketches
 
@@ -60,7 +62,7 @@ const sketch = (p5: p5) => {
 };
 
 // use the sketch
-p5.createInstance(sketch);
+new p5(sketch);
 ```
 
 When you call `play` function, it returns a promise which resolves when animation is finished, you can use await based on your logic
