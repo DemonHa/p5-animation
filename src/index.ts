@@ -1,36 +1,6 @@
-import {
-  animate,
-  ease,
-  easeInSine,
-  easeOutSine,
-  easeInOutSine,
-  easeInQuad,
-  easeOutQuad,
-  easeInOutQuad,
-  easeInOutQuint,
-} from "./animation-functions";
+import { animate } from "./animation-functions";
 import { getTime } from "./utils";
-
-type Pretty<T extends {}> = {
-  [I in keyof T]: T[I];
-};
-
-type RequireKeys<T extends object, K extends keyof T> = Required<Pick<T, K>> &
-  Omit<T, K> extends infer O
-  ? O extends {}
-    ? Pretty<O>
-    : never
-  : never;
-
-type AnimationProps = {
-  duration?: number;
-  animation?: (input: number) => number;
-};
-
-type PlayAnimationProp = {
-  from: number;
-  to: number;
-};
+import type { RequireKeys, AnimationProps, PlayAnimationProp } from "types";
 
 const animation = <D extends AnimationProps>({ animation, duration }: D) => {
   let inProgress: boolean = false;
@@ -107,4 +77,4 @@ export {
   easeOutQuad,
   easeInOutQuad,
   easeInOutQuint,
-};
+} from "./animation-functions";
