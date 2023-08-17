@@ -9,10 +9,7 @@ const animation = <D extends AnimationProps>({ animation, duration }: D) => {
   let startingPoint: number;
   let endingPoint: number;
 
-  let runTime = {
-    duration,
-    animation,
-  };
+  let runTime: RequireKeys<AnimationProps, keyof AnimationProps>;
 
   return {
     inProgress: () => {
@@ -31,8 +28,10 @@ const animation = <D extends AnimationProps>({ animation, duration }: D) => {
       startingPoint = from;
       endingPoint = to;
 
-      runTime.animation = newAnimation ?? animation;
-      runTime.duration = newDuration ?? duration;
+      runTime = {
+        animation: newAnimation ?? animation,
+        duration: newDuration ?? duration,
+      };
 
       // Don't set the animation as completed here, since we don't want the
       // user to have inconsistent result because of the frame rate
@@ -58,8 +57,8 @@ const animation = <D extends AnimationProps>({ animation, duration }: D) => {
         timePassed,
         startingPoint,
         endingPoint,
-        runTime.duration!,
-        runTime.animation!
+        runTime.duration,
+        runTime.animation
       );
     },
   };
