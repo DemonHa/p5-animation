@@ -1,6 +1,6 @@
 type Pretty<T extends {}> = {
   [I in keyof T]: T[I];
-};
+} & {};
 
 export type RequireKeys<T extends object, K extends keyof T> = Required<
   Pick<T, K>

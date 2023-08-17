@@ -1,6 +1,6 @@
 import { animate } from "./animation-functions";
 import { getTime } from "./utils";
-import type { RequireKeys, AnimationProps, PlayAnimationProp } from "types";
+import type { RequireKeys, AnimationProps, PlayAnimationProp } from "./types";
 
 const animation = <D extends AnimationProps>({ animation, duration }: D) => {
   let inProgress: boolean = false;
@@ -52,8 +52,6 @@ const animation = <D extends AnimationProps>({ animation, duration }: D) => {
 
       if (timePassed >= runTime.duration!) {
         inProgress = false;
-        runTime.duration = duration;
-        runTime.animation = animation;
       }
 
       return animate(
