@@ -82,6 +82,15 @@ describe("animation()", () => {
       });
     });
 
+    describe("on undifined porops ", () => {
+      it("should throw when user do not provide thouse properties when animation starts", () => {
+        const { play } = animation();
+
+        // @ts-expect-error
+        play({ from: 0, to: 100 });
+      });
+    });
+
     describe("with general properties", () => {
       it("should be able to provide general properties", () => {
         // @ts-expect-no-error

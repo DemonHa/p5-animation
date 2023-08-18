@@ -2,7 +2,9 @@ import { animate } from "./animation-functions";
 import { getTime } from "./utils";
 import type { RequireKeys, AnimationProps, PlayAnimationProp } from "./types";
 
-const animation = <D extends AnimationProps>({ animation, duration }: D) => {
+const animation = <D extends AnimationProps = {}>(props?: D) => {
+  const { animation, duration } = props ?? {};
+
   let inProgress: boolean = false;
   let lastFrameTimestamp: number;
   let timePassed: number;
@@ -49,7 +51,7 @@ const animation = <D extends AnimationProps>({ animation, duration }: D) => {
       timePassed += timestamp - lastFrameTimestamp;
       lastFrameTimestamp = timestamp;
 
-      if (timePassed >= runTime.duration!) {
+      if (timePassed >= runTime.duration) {
         inProgress = false;
       }
 
