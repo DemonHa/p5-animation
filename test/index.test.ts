@@ -68,7 +68,7 @@ describe("animation()", () => {
   });
 
   describe("types", () => {
-    describe("no general properties", () => {
+    describe("on empty general properties", () => {
       it("user should be able to leave out properties", () => {
         // @ts-expect-no-error
         animation({});
@@ -80,14 +80,35 @@ describe("animation()", () => {
         // @ts-expect-error
         play({ from: 0, to: 100 });
       });
+
+      it("should be able to provide all properties on animation play", () => {
+        const { play } = animation({});
+
+        // @ts-expect-no-error
+        play({ from: 0, to: 100, animation: ease, duration: 100 });
+      });
     });
 
-    describe("on undifined porops ", () => {
+    describe("on undefined props", () => {
       it("should throw when user do not provide thouse properties when animation starts", () => {
         const { play } = animation();
 
         // @ts-expect-error
         play({ from: 0, to: 100 });
+      });
+
+      it("should throw when user do not provide thouse properties when animation starts", () => {
+        const { play } = animation();
+
+        // @ts-expect-error
+        play({ from: 0, to: 100 });
+      });
+
+      it("should be able to provide all properties on animation play", () => {
+        const { play } = animation();
+
+        // @ts-expect-no-error
+        play({ from: 0, to: 100, animation: ease, duration: 100 });
       });
     });
 
@@ -102,6 +123,13 @@ describe("animation()", () => {
 
         // @ts-expect-no-error
         play({ from: 0, to: 100 });
+      });
+
+      it("should be able to override specific properties", () => {
+        const { play } = animation({ animation: ease, duration: 100 });
+
+        // @ts-expect-no-error
+        play({ from: 0, to: 100, animation: easeInOutQuad });
       });
     });
   });
