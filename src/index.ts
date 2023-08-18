@@ -1,50 +1,46 @@
-import {
-  animate,
-  ease,
-  easeInSine,
-  easeOutSine,
-  easeInOutSine,
-  easeInQuad,
-  easeOutQuad,
-  easeInOutQuad,
-  easeInOutQuint,
-} from "./animation-functions";
+import { animate } from "./animation-functions";
 import { getTime } from "./utils";
+import type { RequireKeys, AnimationProps, PlayAnimationProp } from "./types";
 
-type AnimationProps = {
-  duration: number;
-  animation: (input: number) => number;
-};
+const animation = <D extends AnimationProps = {}>(props?: D) => {
+  const { animation, duration } = props ?? {};
 
-type PlayAnimationProp = {
-  from: number;
-  to: number;
-};
-
-const animation = ({ animation, duration }: AnimationProps) => {
   let inProgress: boolean = false;
   let lastFrameTimestamp: number;
   let timePassed: number;
   let startingPoint: number;
   let endingPoint: number;
 
+  let runTime: RequireKeys<AnimationProps, keyof AnimationProps>;
+
   return {
     inProgress: () => {
       return inProgress;
     },
-    play: ({ from, to }: PlayAnimationProp) => {
+    play: ({
+      from,
+      to,
+      duration: newDuration,
+      animation: newAnimation,
+    }: RequireKeys<AnimationProps, keyof Omit<AnimationProps, keyof D>> &
+      PlayAnimationProp) => {
       inProgress = true;
       lastFrameTimestamp = getTime();
       timePassed = 0;
       startingPoint = from;
       endingPoint = to;
 
+      runTime = {
+        animation: newAnimation ?? animation,
+        duration: newDuration ?? duration,
+      };
+
       // Don't set the animation as completed here, since we don't want the
       // user to have inconsistent result because of the frame rate
       return new Promise((resolve) => {
         setTimeout(() => {
           resolve(null);
-        }, duration);
+        }, runTime.duration);
       });
     },
     progress: (defaultValue: number) => {
@@ -55,7 +51,7 @@ const animation = ({ animation, duration }: AnimationProps) => {
       timePassed += timestamp - lastFrameTimestamp;
       lastFrameTimestamp = timestamp;
 
-      if (timePassed >= duration) {
+      if (timePassed >= runTime.duration) {
         inProgress = false;
       }
 
@@ -63,8 +59,8 @@ const animation = ({ animation, duration }: AnimationProps) => {
         timePassed,
         startingPoint,
         endingPoint,
-        duration,
-        animation
+        runTime.duration,
+        runTime.animation
       );
     },
   };
@@ -80,4 +76,4 @@ export {
   easeOutQuad,
   easeInOutQuad,
   easeInOutQuint,
-};
+} from "./animation-functions";

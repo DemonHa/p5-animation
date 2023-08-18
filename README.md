@@ -67,6 +67,8 @@ new p5(sketch);
 
 When you call `play` function, it returns a promise which resolves when animation is finished, you can use await based on your logic
 
+**Note**: You can override animation configuration for a specific animation by providing new values on the play function
+
 # Animation functions
 
 Easing functions specify the rate of change of a parameter over time.

@@ -1,4 +1,4 @@
-import animation, { ease } from "./../src";
+import animation, { ease, easeInOutQuad } from "./../src";
 import * as animationFunctions from "./../src/animation-functions";
 
 const spykAnimate = jest.spyOn(animationFunctions, "animate");
@@ -54,5 +54,83 @@ describe("animation()", () => {
     expect(spykAnimate.mock.calls[0][2]).toBe(100);
 
     expect(spykAnimate.mock.calls[0][3]).toBe(500);
+  });
+
+  it("should override animation function and duration when provided on animation start", () => {
+    const { play, progress } = animation({ animation: ease, duration: 100 });
+
+    play({ from: 0, to: 100, duration: 500, animation: easeInOutQuad });
+    progress(0);
+
+    expect(spykAnimate.mock.calls.length).toBe(1);
+    expect(spykAnimate.mock.calls[0][3]).toBe(500);
+    expect(spykAnimate.mock.calls[0][4]).toBe(easeInOutQuad);
+  });
+
+  describe("types", () => {
+    describe("on empty general properties", () => {
+      it("user should be able to leave out properties", () => {
+        // @ts-expect-no-error
+        animation({});
+      });
+
+      it("should throw when user do not provide thouse properties when animation starts", () => {
+        const { play } = animation({});
+
+        // @ts-expect-error
+        play({ from: 0, to: 100 });
+      });
+
+      it("should be able to provide all properties on animation play", () => {
+        const { play } = animation({});
+
+        // @ts-expect-no-error
+        play({ from: 0, to: 100, animation: ease, duration: 100 });
+      });
+    });
+
+    describe("on undefined props", () => {
+      it("should throw when user do not provide thouse properties when animation starts", () => {
+        const { play } = animation();
+
+        // @ts-expect-error
+        play({ from: 0, to: 100 });
+      });
+
+      it("should throw when user do not provide thouse properties when animation starts", () => {
+        const { play } = animation();
+
+        // @ts-expect-error
+        play({ from: 0, to: 100 });
+      });
+
+      it("should be able to provide all properties on animation play", () => {
+        const { play } = animation();
+
+        // @ts-expect-no-error
+        play({ from: 0, to: 100, animation: ease, duration: 100 });
+      });
+    });
+
+    describe("with general properties", () => {
+      it("should be able to provide general properties", () => {
+        // @ts-expect-no-error
+        animation({ animation: ease, duration: 100 });
+      });
+
+      it("should be able to leave out specific properties when playing animation", () => {
+        const { play } = animation({ animation: ease, duration: 100 });
+
+        // @ts-expect-no-error
+        play({ from: 0, to: 100 });
+      });
+
+      it("should be able to override specific properties", () => {
+        const { play } = animation({ animation: ease, duration: 100 });
+
+        // @ts-expect-no-error
+        play({ from: 0, to: 100, animation: easeInOutQuad });
+      });
+    });
   });
 });
