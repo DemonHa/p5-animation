@@ -1,10 +1,9 @@
 import { animate } from "./animation-functions";
 import { getTime } from "./utils";
 import type {
-  RequireKeys,
   AnimationProps,
-  PlayAnimationProp,
-  AnimationPropsOptinal,
+  PlayAnimationProps,
+  RunTimeAnimationProps,
 } from "./types";
 
 const animation = <D extends AnimationProps = {}>(props?: D) => {
@@ -16,10 +15,7 @@ const animation = <D extends AnimationProps = {}>(props?: D) => {
   let startingPoint: number;
   let endingPoint: number;
 
-  let runTime: RequireKeys<
-    AnimationProps,
-    keyof Omit<AnimationProps, keyof AnimationPropsOptinal>
-  >;
+  let runTime: RunTimeAnimationProps;
 
   return {
     inProgress: () => {
@@ -31,11 +27,7 @@ const animation = <D extends AnimationProps = {}>(props?: D) => {
       duration: newDuration,
       animation: newAnimation,
       delay: newDelay,
-    }: RequireKeys<
-      AnimationProps,
-      keyof Omit<AnimationProps, keyof D & keyof AnimationPropsOptinal>
-    > &
-      PlayAnimationProp) => {
+    }: PlayAnimationProps<D>) => {
       inProgress = true;
       lastFrameTimestamp = getTime();
       timePassed = 0;
