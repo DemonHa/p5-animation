@@ -11,10 +11,14 @@ export type RequireKeys<T extends object, K extends keyof T> = Required<
     : never
   : never;
 
+export type AnimationPropsOptinal = {
+  delay?: number;
+};
+
 export type AnimationProps = {
   duration?: number;
   animation?: (input: number) => number;
-};
+} & AnimationPropsOptinal;
 
 export type PlayAnimationProp = {
   from: number;
