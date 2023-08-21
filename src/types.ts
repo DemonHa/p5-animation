@@ -26,7 +26,7 @@ type AnimationValues = {
 
 export type PlayAnimationProps<D extends {}> = RequireKeys<
   AnimationProps,
-  keyof Omit<AnimationProps, keyof D & keyof AnimationPropsOptional>
+  keyof Omit<AnimationProps, keyof D | keyof AnimationPropsOptional>
 > &
   AnimationValues;
 

@@ -110,6 +110,15 @@ describe("animation()", () => {
         // @ts-expect-no-error
         play({ from: 0, to: 100, animation: ease, duration: 100 });
       });
+
+      it("should be able to provide an animation delay", () => {
+        const { play, progress } = animation();
+
+        play({ from: 0, to: 10, duration: 100, animation: ease, delay: 100 });
+        progress(0);
+        expect(spykAnimate.mock.calls.length).toBe(1);
+        expect(spykAnimate.mock.calls[0][0]).toBe(-100);
+      });
     });
 
     describe("with general properties", () => {
@@ -130,6 +139,15 @@ describe("animation()", () => {
 
         // @ts-expect-no-error
         play({ from: 0, to: 100, animation: easeInOutQuad });
+      });
+
+      it("should be able to override animation delay", () => {
+        const { play, progress } = animation({ delay: 50 });
+
+        play({ from: 0, to: 10, duration: 100, animation: ease, delay: 100 });
+        progress(0);
+        expect(spykAnimate.mock.calls.length).toBe(1);
+        expect(spykAnimate.mock.calls[0][0]).toBe(-100);
       });
     });
   });
