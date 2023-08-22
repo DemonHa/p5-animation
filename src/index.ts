@@ -1,9 +1,13 @@
 import { animate } from "./animation-functions";
 import { getTime } from "./utils";
-import type { RequireKeys, AnimationProps, PlayAnimationProp } from "./types";
+import type {
+  AnimationProps,
+  PlayAnimationProps,
+  RunTimeAnimationProps,
+} from "./types";
 
 const animation = <D extends AnimationProps = {}>(props?: D) => {
-  const { animation, duration } = props ?? {};
+  const { animation, duration, delay } = props ?? {};
 
   let inProgress: boolean = false;
   let lastFrameTimestamp: number;
@@ -11,7 +15,7 @@ const animation = <D extends AnimationProps = {}>(props?: D) => {
   let startingPoint: number;
   let endingPoint: number;
 
-  let runTime: RequireKeys<AnimationProps, keyof AnimationProps>;
+  let runTime: RunTimeAnimationProps;
 
   return {
     inProgress: () => {
@@ -22,8 +26,8 @@ const animation = <D extends AnimationProps = {}>(props?: D) => {
       to,
       duration: newDuration,
       animation: newAnimation,
-    }: RequireKeys<AnimationProps, keyof Omit<AnimationProps, keyof D>> &
-      PlayAnimationProp) => {
+      delay: newDelay,
+    }: PlayAnimationProps<D>) => {
       inProgress = true;
       lastFrameTimestamp = getTime();
       timePassed = 0;
@@ -33,6 +37,7 @@ const animation = <D extends AnimationProps = {}>(props?: D) => {
       runTime = {
         animation: newAnimation ?? animation,
         duration: newDuration ?? duration,
+        delay: newDelay ?? delay,
       };
 
       // Don't set the animation as completed here, since we don't want the
@@ -40,7 +45,7 @@ const animation = <D extends AnimationProps = {}>(props?: D) => {
       return new Promise((resolve) => {
         setTimeout(() => {
           resolve(null);
-        }, runTime.duration);
+        }, runTime.duration + (runTime.delay ?? 0));
       });
     },
     progress: (defaultValue: number) => {
@@ -51,12 +56,12 @@ const animation = <D extends AnimationProps = {}>(props?: D) => {
       timePassed += timestamp - lastFrameTimestamp;
       lastFrameTimestamp = timestamp;
 
-      if (timePassed >= runTime.duration) {
+      if (timePassed - (runTime.delay ?? 0) >= runTime.duration) {
         inProgress = false;
       }
 
       return animate(
-        timePassed,
+        timePassed - (runTime.delay ?? 0),
         startingPoint,
         endingPoint,
         runTime.duration,
