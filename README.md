@@ -19,12 +19,12 @@ yarn add p5-animation
 import p5;
 import animation, { ease } from "p5-animation";
 
-// Define your animation properties
+// Define general animation properties
 const { play, inProgress, progress } = animation({
-  // define an animation function
-  // check out `Animation functions` section
+  // Choose an easing function for animation
+  // Refer to the `Animation functions` section for details
   animation: ease,
-  // animation duration in ms
+  // Set the duration of the animation in milliseconds
   duration: 1000,
 });
 
@@ -39,19 +39,20 @@ const sketch = (p5: p5) => {
   p5.draw = () => {
     p5.background("#fff");
 
-    // set the x value to the animation value
-    // parameter of `progress` is the default value
-    // which is returned when the animation is not in progress
-    // To create animation you have to call `progress` every frame
+    // Update the x value using the animation progress
+    // The parameter of `progress` is the default value
+    // returned when the animation is not in progress
+    // Call `progress` each frame to animate smoothly
     x = progress(x);
     p5.rect(x, 0, 100, 100);
   };
 
-  // We play the animation when the user clicks
+  // Initiate animation on mouse click
   p5.mousePressed = () => {
-    // Make sure another animation is not in progress
+    // Ensure that another animation is not already in progress
     if (!inProgress()) {
-      // Define the start and end values of the animation
+      // Define the start and end values for the animation
+      // You can override previously defined general properties
       play({
         from: x,
         to: x + 100,
@@ -67,7 +68,28 @@ new p5(sketch);
 
 When you call `play` function, it returns a promise which resolves when animation is finished, you can use await based on your logic
 
-**Note**: You can override animation configuration for a specific animation by providing new values on the play function
+# Animation Properties
+
+These properties can be applied either as general settings or tailored for a specific animation, giving you flexibility in defining animations.
+
+If you choose to provide these properties at a general level, they will serve as default values for all animations unless specified otherwise.
+
+## Requred Properties
+
+You must define these properties either as general settings, or if omitted, they must be specified each time you initiate an animation.
+
+| Property  | Type                  |
+| --------- | --------------------- |
+| duration  | number                |
+| animation | (x: number) => number |
+
+## Optional Properties
+
+Enhance your animation control by utilizing these optional properties.
+
+| Property | Type   |
+| -------- | ------ |
+| delay    | number |
 
 # Animation functions
 
