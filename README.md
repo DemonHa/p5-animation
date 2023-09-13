@@ -5,7 +5,7 @@
 [![npm downloads](https://img.shields.io/npm/dt/p5-animation.svg)](https://www.npmjs.com/package/p5-animation)
 ![test workflow](https://github.com/DemonHa/p5-animation/actions/workflows/test.yml/badge.svg)
 
-A lightweight library which offers prebuild anaimation functions for your P5 sketches
+A lightweight library which offers prebuild animation functions for your P5 sketches
 
 # Install
 
@@ -16,7 +16,7 @@ yarn add p5-animation
 # Quick start
 
 ```ts
-import p5;
+import p5 from "p5";
 import animation, { ease } from "p5-animation";
 
 // Define general animation properties
@@ -31,7 +31,6 @@ const { play, inProgress, progress } = animation({
 let x = 0;
 
 const sketch = (p5: p5) => {
-
   p5.setup = (p5: p5) => {
     p5.createCanvas(500, 500);
   };
@@ -59,7 +58,6 @@ const sketch = (p5: p5) => {
       });
     }
   };
-
 };
 
 // use the sketch
@@ -74,7 +72,7 @@ These properties can be applied either as general settings or tailored for a spe
 
 If you choose to provide these properties at a general level, they will serve as default values for all animations unless specified otherwise.
 
-## Requred Properties
+## Required Properties
 
 You must define these properties either as general settings, or if omitted, they must be specified each time you initiate an animation.
 
@@ -103,9 +101,23 @@ Build in functions:
 - easeInSine
 - easeOutSine
 - easeInOutSine
+- easeInCubic
+- easeOutCubic
+- easeInOutCubic
+- easeInQuint
+- easeOutQuint
 - easeInQuad
 - easeOutQuad
 - easeInOutQuad
 - easeInOutQuint
+- easeInCirc
+- easeOutCirc
+- easeInOutCirc
+- easeInQuart
+- easeOutQuart
+- easeInOutQuart
+- easeInExpo
+- easeOutExpo
+- easeInOutExpo
 
 Check out [cheat sheet](https://easings.net) for easing functions
