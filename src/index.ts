@@ -72,13 +72,4 @@ const animation = <D extends AnimationProps = {}>(props?: D) => {
 };
 
 export default animation;
-export {
-  ease,
-  easeInSine,
-  easeOutSine,
-  easeInOutSine,
-  easeInQuad,
-  easeOutQuad,
-  easeInOutQuad,
-  easeInOutQuint,
-} from "./animation-functions";
+export * from "./animation-functions";
